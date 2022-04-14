@@ -1,0 +1,5 @@
+name: ${name}
+author: Ghosti3
+main: ghosti3.mcplugin.customplugin.CustomPlugin
+version: ${version}
+api-version: 1.18
