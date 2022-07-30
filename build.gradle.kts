@@ -7,46 +7,46 @@
  */
 
 plugins {
-    java
-    id("io.papermc.paperweight.userdev") version "1.3.5"
-    id("xyz.jpenilla.run-paper") version "1.0.6"
+  java
+  id("io.papermc.paperweight.userdev") version "1.3.5"
+  id("xyz.jpenilla.run-paper") version "1.0.6"
 }
 
 group = "ghost3.mcplugins.customplugin"
 version = "0.1"
 
 java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
-    }
+  toolchain {
+    languageVersion.set(JavaLanguageVersion.of(17))
+  }
 }
 
 repositories {
-    mavenCentral()
+  mavenCentral()
 }
 
 dependencies {
-    paperDevBundle("1.19-R0.1-SNAPSHOT")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
+  paperDevBundle("1.19-R0.1-SNAPSHOT")
+  testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
 }
 
 tasks {
-    build {
-        dependsOn(reobfJar)
-    }
+  build {
+    dependsOn(reobfJar)
+  }
 
-    test {
-        useJUnitPlatform()
-    }
+  test {
+    useJUnitPlatform()
+  }
 
-    processResources {
-        filteringCharset = "UTF-8"
-        val projectData = mapOf(
-            "name" to project.properties["name"],
-            "version" to project.properties["version"]
-        )
-        filesMatching("plugin.yml") {
-            expand(projectData)
-        }
+  processResources {
+    filteringCharset = "UTF-8"
+    val projectData = mapOf(
+      "name" to project.properties["name"],
+      "version" to project.properties["version"]
+    )
+    filesMatching("plugin.yml") {
+      expand(projectData)
     }
+  }
 }

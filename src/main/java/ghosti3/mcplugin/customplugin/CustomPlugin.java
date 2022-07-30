@@ -9,14 +9,14 @@ import org.bukkit.plugin.PluginLogger;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CustomPlugin extends JavaPlugin {
-    public static Logger plLogger = PluginLogger.getLogger("CustomPlugin");
+  public static Logger plLogger = PluginLogger.getLogger("CustomPlugin");
 
-    @Override
-    public void onEnable() {
-        plLogger.info("Registering custom events");
-        getServer().getPluginManager().registerEvents(new CustomEventListener(), this);
-    }
+  @Override
+  public void onEnable() {
+    plLogger.info("Registering custom events");
+    getServer().getPluginManager().registerEvents(new CustomEventListener(), this);
+  }
 
-    @Override
-    public void onDisable() {}
+  @Override
+  public void onDisable() {}
 }

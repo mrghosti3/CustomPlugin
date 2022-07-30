@@ -7,10 +7,10 @@
  * in the user manual at https://docs.gradle.org/7.3/userguide/multi_project_builds.html
  */
 pluginManagement {
-    repositories {
-        maven("https://papermc.io/repo/repository/maven-public/")
-        gradlePluginPortal()
-    }
+  repositories {
+    maven("https://papermc.io/repo/repository/maven-public/")
+      gradlePluginPortal()
+  }
 }
 
 rootProject.name = "CustomPlugin"
