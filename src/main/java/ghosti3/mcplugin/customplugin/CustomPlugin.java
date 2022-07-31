@@ -3,20 +3,49 @@
  */
 package ghosti3.mcplugin.customplugin;
 
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import org.bukkit.plugin.PluginLogger;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class CustomPlugin extends JavaPlugin {
+  private static CustomPlugin instance = null;
   public static Logger plLogger = PluginLogger.getLogger("CustomPlugin");
 
+  private Settings settings;
+
   @Override
-  public void onEnable() {
+  public void onEnable()
+  {
+    CustomPlugin.instance = this;
+    this.saveDefaultConfig();
+    settings = Settings.fromFileConfig(getConfig());
+
     plLogger.info("Registering custom events");
     getServer().getPluginManager().registerEvents(new CustomEventListener(), this);
   }
 
   @Override
-  public void onDisable() {}
+  public void onDisable()
+  {
+    CustomPlugin.instance = null;
+  }
+
+  @NotNull
+  public Settings getSettings()
+  {
+    return settings;
+  }
+
+  /**
+   * Returns possible instance of initialised plugin.
+   */
+  @Nullable
+  public static Optional<CustomPlugin> getInstance()
+  {
+    return Optional.ofNullable(instance);
+  }
 }
