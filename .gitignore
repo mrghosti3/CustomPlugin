@@ -2,6 +2,7 @@
 .classpath
 .project
 .settings
+Session.vim
 
 # Ignore Gradle project-specific cache directory
 .gradle
