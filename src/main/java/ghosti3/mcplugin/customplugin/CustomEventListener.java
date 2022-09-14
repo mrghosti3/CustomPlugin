@@ -9,7 +9,9 @@ import static org.bukkit.entity.EntityType.CREEPER;
 class CustomEventListener implements Listener {
   @EventHandler
   public void onCreeperExplode(EntityExplodeEvent evt) {
-    if (evt.getEntityType() != CREEPER) return;
-      evt.blockList().clear();
+    if (evt.getEntityType() != CREEPER)
+      return;
+
+    evt.blockList().clear();
   }
 }
