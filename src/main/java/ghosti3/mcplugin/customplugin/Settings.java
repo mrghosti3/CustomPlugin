@@ -6,44 +6,34 @@ import org.bukkit.configuration.file.FileConfiguration;
  * Settings, Singleton
  */
 public class Settings {
-  private static Settings instance;
+    private static Settings instance;
 
-  public final String webhookId;
-  public final String webhookToken;
-  public final int messageDelay;
+    public final String webhookUrl;
+    public final int messageDelay;
 
-  private Settings(final String webhookId,
-                   final String webhookToken,
-                   final int messageDelay)
-  {
-    this.webhookId = webhookId;
-    this.webhookToken = webhookToken;
-    this.messageDelay = messageDelay;
-  }
+    private Settings(final String webhookUrl, final int messageDelay) {
+        this.webhookUrl = webhookUrl;
+        this.messageDelay = messageDelay;
+    }
 
-  @Override
-  public String toString() {
-    return String.format(
-      "Settings [webhookId = '%s', webhookToken = '%s', messageDelay = '%d']",
-      webhookId, webhookToken, messageDelay
-    );
-  }
+    @Override
+    public String toString() {
+        return String.format(
+                "Settings [webhookUrl = '%s', messageDelay = '%d']",
+                webhookUrl, messageDelay);
+    }
 
-  public static Settings fromFileConfig(FileConfiguration config)
-  {
-    if (instance != null)
-      return instance;
+    public static Settings fromFileConfig(FileConfiguration config) {
+        if (instance != null)
+            return instance;
 
-    String webhookId = config.getString("webhook.id");
-    String webhookToken = config.getString("webhook.token");
-    int messageDelay = config.getInt("mdelay", 5);
-    instance = new Settings(webhookId, webhookToken, messageDelay);
+        String webhookUrl = config.getString("webhook_url");
+        int messageDelay = config.getInt("mdelay", 5);
 
-    String err = SettingsValidator.validate(instance);
+        if (webhookUrl == null)
+            throw new NullPointerException();
 
-    if (!err.isBlank())
-      throw new RuntimeException(err);
-
-    return instance;
-  }
+        instance = new Settings(webhookUrl, messageDelay);
+        return instance;
+    }
 }

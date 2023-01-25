@@ -1,4 +1,2 @@
-webhook:
-  id: "enter_yourself"
-  token: "enter_yourself"
+webhook_url: "enter_yourself"
 mdelay: 5
