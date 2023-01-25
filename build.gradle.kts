@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "ghost3.mcplugins.customplugin"
-version = "0.1"
+version = "0.2"
 
 java {
   toolchain {
