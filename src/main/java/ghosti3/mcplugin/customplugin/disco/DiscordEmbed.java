@@ -2,6 +2,8 @@ package ghosti3.mcplugin.customplugin.disco;
 
 import java.io.Serializable;
 
+import org.bukkit.Color;
+
 import com.google.gson.Gson;
 
 /**
@@ -65,8 +67,8 @@ public class DiscordEmbed implements Serializable {
             return this;
         }
 
-        public Builder setColor(int color) {
-            result.color = color;
+        public Builder setColor(Color color) {
+            result.color = color.asRGB();
             return this;
         }
 

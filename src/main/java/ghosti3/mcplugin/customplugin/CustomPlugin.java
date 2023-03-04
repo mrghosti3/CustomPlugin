@@ -5,9 +5,7 @@ package ghosti3.mcplugin.customplugin;
 
 import java.net.MalformedURLException;
 import java.util.Optional;
-import java.util.logging.Logger;
 
-import org.bukkit.plugin.PluginLogger;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -16,10 +14,9 @@ import ghosti3.mcplugin.customplugin.disco.DiscordPush;
 
 public class CustomPlugin extends JavaPlugin {
     private static CustomPlugin instance = null;
-    public static Logger plLogger = PluginLogger.getLogger("CustomPlugin");
 
     private Settings settings;
-    private DiscordPush sender;
+    private DiscordPush sender = null;
 
     @Override
     public void onEnable() {
@@ -28,23 +25,25 @@ public class CustomPlugin extends JavaPlugin {
         settings = Settings.fromFileConfig(getConfig());
 
         try {
-            sender = new DiscordPush(settings.webhookUrl);
+            sender = new DiscordPush(settings.webhookUrl, logger);
         } catch (MalformedURLException e) {
-            plLogger.severe("Bad WEBHOOK_URL.");
+            logger.severe("Bad WEBHOOK_URL.");
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
 
-        plLogger.info("Registering custom events");
-        getServer().getPluginManager().registerEvents(new CustomEventListener(), this);
+        logger.info("Registering custom events");
+        getServer().getPluginManager()
+                .registerEvents(new CustomEventListener(this), this);
 
-        sender.build(DiscordPush.MsgTypes.ServerOnline).send();
+        sender.send(DiscordPush.SERVER_ONLINE);
     }
 
     @Override
     public void onDisable() {
-        if (sender != null)
-            sender.build(DiscordPush.MsgTypes.ServerOffline).send();
+        if (sender != null) {
+            sender.send(DiscordPush.SERVER_OFFLINE);
+        }
 
         CustomPlugin.instance = null;
     }
@@ -52,6 +51,11 @@ public class CustomPlugin extends JavaPlugin {
     @NotNull
     public Settings getSettings() {
         return settings;
+    }
+
+    @NotNull
+    public DiscordPush getSender() {
+        return sender;
     }
 
     /**

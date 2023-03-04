@@ -45,6 +45,7 @@ public class DiscordMessage implements Serializable {
 
         private DiscordMessage result = new DiscordMessage();
 
+        // BUG: should properly indicate that it this func may error and why.
         public Builder setContent(String content) {
             if (content.length() > MAX_CONTENT_LENGTH)
                 return null;
@@ -54,8 +55,9 @@ public class DiscordMessage implements Serializable {
         }
 
         /**
-         * Adds embed obj to array if max size is not exceeded.
-         * 
+         * Adds embed obj to array if {@link DiscordMessage.Builder.MAX_EMBED_LENGTH} is
+         * not exceeded.
+         *
          * @param embed {@link DiscordEmbed} to be added to message embed obj array
          * @return The calling object is returned.
          */

@@ -6,31 +6,35 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.logging.Logger;
 
 import javax.net.ssl.HttpsURLConnection;
 
 public class DiscordPush {
-    private final URL webhook;
-    private DiscordMessage msg;
-
-    public DiscordPush(String webhookUrl) throws MalformedURLException {
-        webhook = new URL(webhookUrl);
-    }
+    /**
+     * Prebuilt message for when server is back online.
+     */
+    public final static DiscordMessage SERVER_ONLINE = new DiscordMessage.Builder()
+                .setContent("Server is online :green_circle:")
+                .toMessage();
 
     /**
-     * @return the msg
+     * Prebuilt message for when server is being shut down.
      */
-    public DiscordMessage getMsg() {
-        return msg;
+    public final static DiscordMessage SERVER_OFFLINE = new DiscordMessage.Builder()
+            .setContent("Server is offline :red_circle:")
+            .toMessage();
+
+    private final URL webhook;
+    private final Logger logger;
+
+    public DiscordPush(String webhookUrl, Logger logger) throws MalformedURLException {
+        webhook = new URL(webhookUrl);
+        this.logger = logger;
     }
 
-    public DiscordPush build(MsgTypes type) {
-        msg = type.toMessage();
-        return this;
-    }
-
-    public boolean send() {
-        String content = msg.toString();
+    public boolean send(final DiscordMessage msg) {
+        final String content = msg.toString();
 
         try {
             var conn = (HttpsURLConnection) webhook.openConnection();
@@ -46,7 +50,7 @@ public class DiscordPush {
             try (var reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    System.out.println(line);
+                    logger.info("Discord returned: " + line);
                 }
             }
             conn.disconnect();
@@ -55,34 +59,5 @@ public class DiscordPush {
         }
 
         return true;
-    }
-
-    public static enum MsgTypes {
-        ServerOnline("Server is online :green_circle:"),
-        ServerOffline("Server is offline :red_circle:"),
-        OnlinePlayers();
-
-        private String content;
-
-        private MsgTypes() {
-        }
-
-        private MsgTypes(String content) {
-            this.content = content;
-        }
-
-        /**
-         * @return the content
-         */
-        public String getContent() {
-            return content;
-        }
-
-        /**
-         * @return final DiscordMessage 
-         */
-        public DiscordMessage toMessage() {
-            return new DiscordMessage.Builder().setContent(this.content).toMessage();
-        }
     }
 }
