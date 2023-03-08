@@ -6,6 +6,10 @@ JAVA_DEBUGGER_OPTS=-attach 5005
 serv:
 	$(GRADLEW) runServ
 
+jar: GRADLEW_OPTS=--no-daemon
+jar: clean
+	$(GRADLEW) $(GRADLEW_OPTS) jar
+
 all:
 	$(GRADLEW) build
 
@@ -14,11 +18,6 @@ status:
 
 stop:
 	$(GRADLEW) --stop
-
-jar: GRADLEW_OPTS=--no-daemon
-jar: build/libs/CustomPlugin-0.1-dev.jar
-	$(GRADLEW) $(GRADLEW_OPTS) clean
-	$(GRADLEW) $(GRADLEW_OPTS) jar
 
 debug:
 	$(JAVA_DEBUGGER) $(JAVA_DEBUGGER_OPTS)
