@@ -3,6 +3,9 @@ GRADLEW=./gradlew
 JAVA_DEBUGGER=jdb
 JAVA_DEBUGGER_OPTS=-attach 5005
 
+serv:
+	$(GRADLEW) runServ
+
 all:
 	$(GRADLEW) build
 
