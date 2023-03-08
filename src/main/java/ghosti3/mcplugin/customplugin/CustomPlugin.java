@@ -5,6 +5,7 @@ package ghosti3.mcplugin.customplugin;
 
 import java.net.MalformedURLException;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -16,11 +17,13 @@ public class CustomPlugin extends JavaPlugin {
     private static CustomPlugin instance = null;
 
     private Settings settings;
+    private Logger logger = null;
     private DiscordPush sender = null;
 
     @Override
     public void onEnable() {
         CustomPlugin.instance = this;
+        logger = getLogger();
         this.saveDefaultConfig();
         settings = Settings.fromFileConfig(getConfig());
 
