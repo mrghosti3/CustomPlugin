@@ -8,8 +8,8 @@
 
 plugins {
   java
-  id("io.papermc.paperweight.userdev") version "1.3.5"
-  id("xyz.jpenilla.run-paper") version "1.0.6"
+  id("io.papermc.paperweight.userdev") version "1.5.3"
+  id("xyz.jpenilla.run-paper") version "2.0.1"
 }
 
 group = "ghost3.mcplugins.customplugin"
