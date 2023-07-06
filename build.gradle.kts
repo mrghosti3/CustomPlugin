@@ -8,12 +8,12 @@
 
 plugins {
   java
-  id("io.papermc.paperweight.userdev") version "1.5.3"
-  id("xyz.jpenilla.run-paper") version "2.0.1"
+  id("io.papermc.paperweight.userdev") version "1.5.5"
+  id("xyz.jpenilla.run-paper") version "2.1.0"
 }
 
 group = "ghost3.mcplugins.customplugin"
-version = "0.2.2"
+version = "0.3.0"
 
 java {
   toolchain {
@@ -26,7 +26,7 @@ repositories {
 }
 
 dependencies {
-  paperDevBundle("1.19.3-R0.1-SNAPSHOT")
+  paperweight.paperDevBundle("1.20.1-R0.1-SNAPSHOT")
   testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
 }
 
