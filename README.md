@@ -5,7 +5,7 @@ Custom plugin for private minecraft server.
 ## Requirements
 
 - Java 1.17
-- PaperMC 1.19 (Minecraft 1.19)
+- PaperMC 1.20.1 (Minecraft 1.20.1)
 
 ## Features
 
