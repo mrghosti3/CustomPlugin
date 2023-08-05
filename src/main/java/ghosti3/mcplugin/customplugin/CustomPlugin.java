@@ -3,71 +3,69 @@
  */
 package ghosti3.mcplugin.customplugin;
 
+import ghosti3.mcplugin.customplugin.disco.DiscordPush;
 import java.net.MalformedURLException;
 import java.util.Optional;
 import java.util.logging.Logger;
-
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import ghosti3.mcplugin.customplugin.disco.DiscordPush;
-
 public class CustomPlugin extends JavaPlugin {
-    private static CustomPlugin instance = null;
+  private static CustomPlugin instance = null;
 
-    private Settings settings;
-    private Logger logger = null;
-    private DiscordPush sender = null;
+  private Settings settings;
+  private Logger logger = null;
+  private DiscordPush sender = null;
 
-    @Override
-    public void onEnable() {
-        CustomPlugin.instance = this;
-        logger = getLogger();
-        this.saveDefaultConfig();
-        settings = Settings.fromFileConfig(getConfig());
+  @Override
+  public void onEnable() {
+    CustomPlugin.instance = this;
+    logger = getLogger();
+    this.saveDefaultConfig();
+    settings = Settings.fromFileConfig(getConfig());
 
-        try {
-            sender = new DiscordPush(settings.webhookUrl, logger);
-        } catch (MalformedURLException e) {
-            logger.severe("Bad WEBHOOK_URL.");
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
-
-        logger.info("Registering custom events");
-        getServer().getPluginManager()
-                .registerEvents(new CustomEventListener(this), this);
-
-        sender.send(DiscordPush.SERVER_ONLINE);
+    try {
+      sender = new DiscordPush(settings.webhookUrl, logger);
+    } catch (MalformedURLException e) {
+      logger.severe("Bad WEBHOOK_URL.");
+      getServer().getPluginManager().disablePlugin(this);
+      return;
     }
 
-    @Override
-    public void onDisable() {
-        if (sender != null) {
-            sender.send(DiscordPush.SERVER_OFFLINE);
-        }
+    logger.info("Registering custom events");
+    getServer().getPluginManager().registerEvents(new CustomEventListener(this),
+                                                  this);
 
-        CustomPlugin.instance = null;
+    sender.send(DiscordPush.SERVER_ONLINE);
+  }
+
+  @Override
+  public void onDisable() {
+    if (sender != null) {
+      sender.send(DiscordPush.SERVER_OFFLINE);
     }
 
-    @NotNull
-    public Settings getSettings() {
-        return settings;
-    }
+    CustomPlugin.instance = null;
+  }
 
-    @NotNull
-    public DiscordPush getSender() {
-        return sender;
-    }
+  @NotNull
+  public Settings getSettings() {
+    return settings;
+  }
 
-    /**
-     * Returns possible instance of initialised plugin.
-     *
-     * @return possible reference to {@link CustomPlugin} active instance
-     */
-    @Nullable
-    public static Optional<CustomPlugin> getInstance() {
-        return Optional.ofNullable(instance);
-    }
+  @NotNull
+  public DiscordPush getSender() {
+    return sender;
+  }
+
+  /**
+   * Returns possible instance of initialised plugin.
+   *
+   * @return possible reference to {@link CustomPlugin} active instance
+   */
+  @Nullable
+  public static Optional<CustomPlugin> getInstance() {
+    return Optional.ofNullable(instance);
+  }
 }
