@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "ghost3.mcplugins.customplugin"
-version = "0.3.0"
+version = "1.0.0"
 
 java {
   toolchain {
@@ -26,7 +26,7 @@ repositories {
 }
 
 dependencies {
-  paperweight.paperDevBundle("26.1.2.build.67-stable")
+  paperweight.paperDevBundle("26.1.2.build.+")
 
   // Unit tests
   testImplementation(platform("org.junit:junit-bom:6.1.0"))
