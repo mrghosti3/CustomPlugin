@@ -1,2 +1,5 @@
-webhook_url: "enter_yourself"
-mdelay: 5
+capture:
+  grief:
+    creeper: true
+    enderman: true
+    ghast: true

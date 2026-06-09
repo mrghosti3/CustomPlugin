@@ -8,18 +8,16 @@ import org.bukkit.configuration.file.FileConfiguration;
 public class Settings {
   private static Settings instance;
 
-  public final String webhookUrl;
-  public final int messageDelay;
-
-  private Settings(final String webhookUrl, final int messageDelay) {
-    this.webhookUrl = webhookUrl;
-    this.messageDelay = messageDelay;
+  private Settings() {
   }
 
   @Override
   public String toString() {
-    return String.format("Settings [webhookUrl = '%s', messageDelay = '%d']",
-                         webhookUrl, messageDelay);
+    return "Settings";
+  }
+
+  public static void reset() {
+    instance = null;
   }
 
   public static Settings fromFileConfig(FileConfiguration config) {
@@ -27,14 +25,7 @@ public class Settings {
       return instance;
     }
 
-    String webhookUrl = config.getString("webhook_url");
-    int messageDelay = config.getInt("mdelay", 5);
-
-    if (webhookUrl == null) {
-      throw new NullPointerException();
-    }
-
-    instance = new Settings(webhookUrl, messageDelay);
+    instance = new Settings();
     return instance;
   }
 }

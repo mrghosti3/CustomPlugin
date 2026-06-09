@@ -3,8 +3,6 @@
  */
 package ghosti3.mcplugin.customplugin;
 
-import ghosti3.mcplugin.customplugin.disco.DiscordPush;
-import java.net.MalformedURLException;
 import java.util.Optional;
 import java.util.logging.Logger;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,7 +14,6 @@ public class CustomPlugin extends JavaPlugin {
 
   private Settings settings;
   private Logger logger = null;
-  private DiscordPush sender = null;
 
   @Override
   public void onEnable() {
@@ -25,38 +22,18 @@ public class CustomPlugin extends JavaPlugin {
     this.saveDefaultConfig();
     settings = Settings.fromFileConfig(getConfig());
 
-    try {
-      sender = new DiscordPush(settings.webhookUrl, logger);
-    } catch (MalformedURLException e) {
-      logger.severe("Bad WEBHOOK_URL.");
-      getServer().getPluginManager().disablePlugin(this);
-      return;
-    }
-
     logger.info("Registering custom events");
-    getServer().getPluginManager().registerEvents(new CustomEventListener(this),
-                                                  this);
-
-    sender.send(DiscordPush.SERVER_ONLINE);
+    getServer().getPluginManager().registerEvents(new CustomEventListener(this), this);
   }
 
   @Override
   public void onDisable() {
-    if (sender != null) {
-      sender.send(DiscordPush.SERVER_OFFLINE);
-    }
-
     CustomPlugin.instance = null;
   }
 
   @NotNull
   public Settings getSettings() {
     return settings;
-  }
-
-  @NotNull
-  public DiscordPush getSender() {
-    return sender;
   }
 
   /**
