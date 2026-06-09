@@ -18,11 +18,13 @@ public class CustomPlugin extends JavaPlugin {
   @Override
   public void onEnable() {
     CustomPlugin.instance = this;
-    logger = getLogger();
+
     this.saveDefaultConfig();
     settings = Settings.fromFileConfig(getConfig());
 
+    logger = getLogger();
     logger.info("Registering custom events");
+
     getServer().getPluginManager().registerEvents(new CustomEventListener(this), this);
   }
 

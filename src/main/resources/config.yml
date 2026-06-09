@@ -1,5 +1,6 @@
 capture:
   grief:
-    creeper: true
-    enderman: true
-    ghast: true
+    # Must be in UPPERCASE
+    CREEPER: false
+    ENDERMAN: false
+    GHAST: false
