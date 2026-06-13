@@ -35,10 +35,6 @@ class CustomEventListener implements Listener {
     }
 
     evt.setCancelled(true);
-    logger.info(String.format(
-      "Blocked entitiy grief: %s",
-      evt.getEntityType().toString()
-    ));
   }
 
   @EventHandler
