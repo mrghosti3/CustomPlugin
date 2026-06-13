@@ -1,2 +1,6 @@
-webhook_url: "enter_yourself"
-mdelay: 5
+capture:
+  grief:
+    # Must be in UPPERCASE
+    CREEPER: false
+    ENDERMAN: false
+    GHAST: false

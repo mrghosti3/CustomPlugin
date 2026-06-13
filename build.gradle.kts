@@ -8,16 +8,16 @@
 
 plugins {
   java
-  id("io.papermc.paperweight.userdev") version "1.5.5"
-  id("xyz.jpenilla.run-paper") version "2.1.0"
+  id("io.papermc.paperweight.userdev") version "2.0.0-beta.21"
+  id("xyz.jpenilla.run-paper") version "3.0.2"
 }
 
 group = "ghost3.mcplugins.customplugin"
-version = "0.3.0"
+version = "1.0.0"
 
 java {
   toolchain {
-    languageVersion.set(JavaLanguageVersion.of(17))
+    languageVersion.set(JavaLanguageVersion.of(25))
   }
 }
 
@@ -26,17 +26,20 @@ repositories {
 }
 
 dependencies {
-  paperweight.paperDevBundle("1.20.1-R0.1-SNAPSHOT")
-  testImplementation("org.junit.jupiter:junit-jupiter:5.7.2")
+  paperweight.paperDevBundle("26.1.2.build.+")
+
+  // Unit tests
+  testImplementation(platform("org.junit:junit-bom:6.1.0"))
+  testImplementation("org.junit.jupiter:junit-jupiter")
+  testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks {
-  build {
-    dependsOn(reobfJar)
-  }
-
   test {
     useJUnitPlatform()
+    testLogging {
+      events("passed", "skipped", "failed")
+    }
   }
 
   processResources {
